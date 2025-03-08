@@ -66,17 +66,18 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch("/blog/posts/")
             .then(response => response.text())
             .then(text => {
-                let files = text.match(/href="(.*?)"/g) || [];
-                postList = files
-                    .map(link => link.replace(/href="|"/g, ''))
-                    .filter(filename => filename.endsWith(".md"))
-                    .map(filename => filename.split('/').pop().replace(".md", "")) // Remove directory paths and extensions
+                let parser = new DOMParser();
+                let doc = parser.parseFromString(text, "text/html");
+                let links = Array.from(doc.querySelectorAll("a"));
+                postList = links
+                    .map(link => link.href.split('/').pop()) // Get filename
+                    .filter(filename => filename.endsWith(".md")) // Only keep .md files
                     .map(filename => ({
-                        filename,
+                        filename: filename.replace(".md", ""),
                         size: getRandomFileSize(),
                         date: getRandomDate()
                     }));
-
+    
                 if (postList.length === 0) {
                     appendToTerminal("No blog posts found.");
                 } else {
@@ -91,7 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     appendToTerminal("Use 'open [filename]' or 'open [number]' to open a post.");
                 }
             })
-            .catch(() => appendToTerminal("Error fetching post list."));
+            .catch(error => {
+                console.error("Error fetching post list:", error);
+                appendToTerminal("Error fetching post list.");
+            });
     }
 
     function openPost(filename) {
