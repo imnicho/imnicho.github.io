@@ -1,0 +1,36 @@
+name: Generate Blog Posts List
+
+on:
+  push:
+    paths:
+      - "blog/posts/*.md" # Runs when markdown files are added/removed in blog/posts/
+  workflow_dispatch: # Allows manual triggering if needed
+
+jobs:
+  update-posts-json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Generate posts.json
+        run: |
+          echo "[" > blog/posts.json
+          for file in blog/posts/*.md; do
+            filename=$(basename "$file" .md)
+            filesize=$(stat -c%s "$file")
+            filedate=$(git log -1 --format="%as" "$file")
+            echo "  { \"filename\": \"$filename\", \"size\": \"$(($filesize / 1024))KB\", \"date\": \"$filedate\" }," >> blog/posts.json
+          done
+          sed -i '$ s/,$//' blog/posts.json # Remove trailing comma
+          echo "]" >> blog/posts.json
+
+      - name: Commit & Push Changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add blog/posts.json
+          git commit -m "Auto-update posts.json"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
