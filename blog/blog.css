@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap');
+
+body {
+    background: black;
+    color: green;
+    font-family: 'Source Code Pro', monospace;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.terminal {
+    width: 80vw;
+    max-width: 700px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border: 2px solid limegreen;
+    box-shadow: 0px 0px 15px limegreen;
+}
+
+.output {
+    height: 300px;
+    overflow-y: auto;
+    font-size: 16px;
+    white-space: pre-wrap;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.prompt {
+    color: limegreen;
+    margin-right: 5px;
+}
+
+input {
+    background: transparent;
+    border: none;
+    color: limegreen;
+    font-size: 16px;
+    width: 100%;
+    outline: none;
+}
+
+.command {
+    color: cyan;
+    font-weight: bold;
+}

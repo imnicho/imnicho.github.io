@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Domain Web</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <!-- Background Canvas (for Three.js grid) -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Background Terminal -->
+    <div class="background-terminal"></div>
+
+    <!-- Terminal UI -->
+    <div class="terminal">
+        <div class="output">
+            <p>Welcome to <span class="red">The Domain Web</span>...</p>
+            <p>Type 'help' to begin.</p>
+        </div>
+        <div class="input-line">
+            <span class="prompt">></span>
+            <input type="text" id="terminalInput" autofocus>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
