@@ -18,20 +18,16 @@ body {
     padding: 20px;
     border: 2px solid limegreen;
     box-shadow: 0px 0px 15px limegreen;
-    overflow: auto; /* Ensure content stays inside */
-    white-space: auto; /* Prevent text wrapping in unwanted places */
+    overflow: hidden; /* Ensure content stays inside */
+    white-space: nowrap; /* Prevent text wrapping in unwanted places */
 }
 
 .output {
-    width: 100%; /* Ensure full width usage */
-    overflow-x: hidden; /* Prevent horizontal overflow */
-    overflow-y: auto; /* Allow scrolling if needed */
-    font-size: 18px; /* Increase font size for better readability */
-    white-space: pre-wrap; /* Ensure text wraps correctly */
-    word-wrap: break-word; /* Prevent text from being cut off */
-    margin-bottom: 20px; /* Add spacing below the text */
-    padding: 10px; /* Add internal padding to avoid clipping */
-    line-height: 1.5;
+    width: 100%; /* Ensure it takes full width */
+    overflow-x: auto; /* Enable horizontal scrolling if necessary */
+    font-size: 18px; /* Slightly increase font size for readability */
+    white-space: pre-wrap; /* Allow text to wrap properly */
+    word-wrap: break-word; /* Ensure words break properly */
 }
 
 .input-line {
