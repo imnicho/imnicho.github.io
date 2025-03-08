@@ -63,20 +63,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function fetchPostMetadata() {
-        fetch("/blog/posts/")
+        fetch("/blog/posts/") // Ensure we're targeting the correct directory
             .then(response => response.text())
             .then(text => {
-                let files = text.match(/href="(.*?)"/g) || [];
-                postList = files
-                    .map(link => link.replace(/href="|"/g, ''))
-                    .filter(filename => filename.endsWith(".md"))
-                    .map(filename => filename.split('/').pop().replace(".md", "")) // Remove directory paths and extensions
+                let parser = new DOMParser();
+                let doc = parser.parseFromString(text, "text/html");
+                let links = Array.from(doc.querySelectorAll("a")); // Get all <a> tags
+    
+                postList = links
+                    .map(link => link.getAttribute("href"))
+                    .filter(filename => filename.endsWith(".md")) // Only Markdown files
+                    .map(filename => filename.replace(".md", "").replace(/^.*[\\/]/, "")) // Remove directory paths
                     .map(filename => ({
                         filename,
                         size: getRandomFileSize(),
                         date: getRandomDate()
                     }));
-
+    
                 if (postList.length === 0) {
                     appendToTerminal("No blog posts found.");
                 } else {
@@ -93,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .catch(() => appendToTerminal("Error fetching post list."));
     }
-
+    
     function openPost(filename) {
         fetch(`/blog/posts/${filename}.md`)
             .then(response => {
