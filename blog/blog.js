@@ -63,40 +63,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function fetchPostMetadata() {
-        fetch("/blog/posts/") // Ensure we're targeting the correct directory
-            .then(response => response.text())
-            .then(text => {
-                let parser = new DOMParser();
-                let doc = parser.parseFromString(text, "text/html");
-                let links = Array.from(doc.querySelectorAll("a")); // Get all <a> tags
-    
-                postList = links
-                    .map(link => link.getAttribute("href"))
-                    .filter(filename => filename.endsWith(".md")) // Only Markdown files
-                    .map(filename => filename.replace(".md", "").replace(/^.*[\\/]/, "")) // Remove directory paths
-                    .map(filename => ({
-                        filename,
-                        size: getRandomFileSize(),
-                        date: getRandomDate()
-                    }));
+        fetch("/blog/posts.json")
+            .then(response => response.json())
+            .then(data => {
+                postList = data.map((post, index) => ({
+                    filename: post.filename,
+                    size: post.size,
+                    date: post.date
+                }));
     
                 if (postList.length === 0) {
                     appendToTerminal("No blog posts found.");
-                } else {
-                    appendToTerminal("Available blog posts:");
-                    appendToTerminal("--------------------------------------------------");
-                    appendToTerminal("#   | Filename          | Size   | Date");
-                    appendToTerminal("--------------------------------------------------");
-                    postList.forEach((post, index) => {
-                        appendToTerminal(`${(index + 1).toString().padEnd(3)} | ${post.filename.padEnd(15)} | ${post.size.padEnd(6)} | ${post.date}`);
-                    });
-                    appendToTerminal("--------------------------------------------------");
-                    appendToTerminal("Use 'open [filename]' or 'open [number]' to open a post.");
+                    return;
                 }
-            })
-            .catch(() => appendToTerminal("Error fetching post list."));
-    }
     
+                appendToTerminal("Available blog posts:");
+                appendToTerminal("--------------------------------------------------");
+                appendToTerminal("#   | Filename          | Size   | Date");
+                appendToTerminal("--------------------------------------------------");
+                postList.forEach((post, index) => {
+                    appendToTerminal(`${(index + 1).toString().padEnd(3)} | ${post.filename.padEnd(15)} | ${post.size.padEnd(6)} | ${post.date}`);
+                });
+                appendToTerminal("--------------------------------------------------");
+                appendToTerminal("Use 'open [filename]' or 'open [number]' to open a post.");
+            })
+            .catch(() => appendToTerminal("Error loading blog posts."));
+    }
+
     function openPost(filename) {
         fetch(`/blog/posts/${filename}.md`)
             .then(response => {
