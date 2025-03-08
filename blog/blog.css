@@ -18,8 +18,8 @@ body {
     padding: 20px;
     border: 2px solid limegreen;
     box-shadow: 0px 0px 15px limegreen;
-    overflow: hidden; /* Ensure content stays inside */
-    white-space: pre-wrap; /* Prevent text wrapping in unwanted places */
+    overflow: auto; /* Ensure content stays inside */
+    white-space: auto; /* Prevent text wrapping in unwanted places */
 }
 
 .output {
