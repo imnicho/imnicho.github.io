@@ -14,13 +14,17 @@ body {
 .terminal {
     width: 90vw;
     max-width: 800px;
-    height: 500px; /* Set fixed height */
-    overflow-y: auto; /* Enable scrolling instead of expanding */
+    height: 500px; /* Keep the terminal at a fixed height */
+    overflow-y: auto; /* Enable scrolling if needed */
+    display: flex;
+    flex-direction: column;
 }
 
 .output {
-    height: 85%; /* Limit height */
-    overflow-y: auto; /* Allow scrolling */
+    flex-grow: 1;
+    height: 100%; /* Ensure it doesn't shrink */
+    overflow-y: auto; /* Prevent growing, allow scrolling */
+    white-space: pre-wrap; /* Ensure text wraps properly */
 }
 
 .input-line {
