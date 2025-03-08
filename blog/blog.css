@@ -12,19 +12,19 @@ body {
 }
 
 .terminal {
-    width: 90vw;
-    max-width: 800px;
-    height: 500px; /* Keep the terminal at a fixed height */
-    overflow-y: auto; /* Enable scrolling if needed */
-    display: flex;
-    flex-direction: column;
+    width: 80vw;
+    max-width: 700px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border: 2px solid limegreen;
+    box-shadow: 0px 0px 15px limegreen;
 }
 
 .output {
-    flex-grow: 1;
-    height: 100%; /* Ensure it doesn't shrink */
-    overflow-y: auto; /* Prevent growing, allow scrolling */
-    white-space: pre-wrap; /* Ensure text wraps properly */
+    height: 300px;
+    overflow-y: auto;
+    font-size: 16px;
+    white-space: pre-wrap;
 }
 
 .input-line {
