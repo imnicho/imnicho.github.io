@@ -96,6 +96,13 @@ input {
     filter: blur(3px);
 }
 
+@media (max-width: 768px) {
+    .background-terminal {
+        font-size: 12px; /* Reduce font size */
+        line-height: 1; /* Reduce spacing */
+    }
+}
+
 /* --- Glitch Effect --- */
 @keyframes glitch {
     0% { transform: skewX(0deg); }

@@ -4,6 +4,14 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bgCanvas'), alpha: true });
 
 renderer.setSize(window.innerWidth, window.innerHeight);
+
+function onResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+window.addEventListener("resize", onResize);
+
 document.body.appendChild(renderer.domElement);
 
 // Wireframe Grid

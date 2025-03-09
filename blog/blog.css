@@ -14,7 +14,9 @@ body {
 .terminal {
     width: 80vw;
     max-width: 700px;
-    height: 400px; /* Set a fixed height */
+    height: auto; /* Allow height to be flexible */
+    min-height: 60vh; /* Set a minimum height */
+    max-height: 80vh; /* Prevent it from being too large */
     background: rgba(0, 0, 0, 0.9);
     padding: 20px;
     border: 2px solid limegreen;
@@ -28,7 +30,9 @@ body {
     overflow-y: auto; /* Ensure scrolling instead of expansion */
     font-size: 16px;
     white-space: pre-wrap;
-    height: 300px; /* Set a fixed height */
+    height: auto; /* Allow height to be flexible */
+    min-height: 50vh; /* Set a minimum height */
+    max-height: 70vh; /* Prevent it from being too large */
 }
 
 .input-line {
@@ -55,4 +59,25 @@ input {
 .command {
     color: cyan;
     font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .terminal {
+        width: 90vw; /* Use more width on smaller screens */
+        max-width: none;
+    }
+
+    .output {
+        font-size: 14px; /* Slightly reduce font size */
+    }
+
+    .input-line input {
+        font-size: 18px; /* Increase tap area */
+        padding: 8px;
+    }
+
+    .ascii-title {
+        font-size: 12px; /* Scale down ASCII text */
+        white-space: pre-wrap; /* Prevent overflow */
+    }
 }
