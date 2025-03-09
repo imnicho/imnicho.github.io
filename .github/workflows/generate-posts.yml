@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false # Prevents GitHub overriding our PAT
 
       - name: Generate posts.json
         run: |
@@ -26,11 +28,12 @@ jobs:
           echo "]" >> blog/posts.json
 
       - name: Commit & Push Changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/imnicho/imnicho.github.io.git
           git add blog/posts.json
-          git commit -m "Auto-update posts.json"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git commit -m "Auto-update posts.json" || echo "No changes to commit"
+          git push origin main
